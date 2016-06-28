@@ -12,11 +12,8 @@ const initialChannel = 'Lobby'; // NOTE: I hard coded this value for my example.
 class ChatContainer extends Component {
   componentWillMount() {
     const { dispatch, user } = this.props;
-    if(!user.username) {
-      dispatch(receiveAuth());
-    }
     dispatch(actions.fetchMessages(initialChannel));
-    dispatch(actions.fetchChannels(user.username));
+    dispatch(actions.fetchChannels("test"));
   }
   render() {
     return (
@@ -37,10 +34,9 @@ function mapStateToProps(state) {
   return {
       messages: state.messages.data,
       channels: state.channels.data,
+      user: state.user.user,
       activeChannel: state.activeChannel.name,
-      user: state.auth.user,
       typers: state.typers,
-      screenWidth: state.environment.screenWidth
   }
 }
 export default connect(mapStateToProps)(ChatContainer)

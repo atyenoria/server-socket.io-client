@@ -20,6 +20,7 @@ export default class MessageComposer extends Component {
   }
   handleSubmit(event) {
     const { user, socket, activeChannel} = this.props;
+    user.username="test"
     const text = event.target.value.trim();
     if (event.which === 13) {
       event.preventDefault();
@@ -38,6 +39,7 @@ export default class MessageComposer extends Component {
   }
   handleChange(event) {
     const { socket, user, activeChannel } = this.props;
+    user.username="test"
     this.setState({ text: event.target.value });
     if (event.target.value.length > 0 && !this.state.typing) {
       socket.emit('typing', { user: user.username, channel: activeChannel });

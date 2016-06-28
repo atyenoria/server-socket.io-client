@@ -27,6 +27,7 @@ export default class Chat extends Component {
   }
   componentDidMount() {
     const { socket, user, dispatch } = this.props;
+    user.username="test"
     socket.emit('chat mounted', user);
     socket.on('new bc message', msg =>
       dispatch(actions.receiveRawMessage(msg))
@@ -40,9 +41,9 @@ export default class Chat extends Component {
     socket.on('new channel', channel =>
       dispatch(actions.receiveRawChannel(channel))
     );
-    socket.on('receive socket', socketID =>
-      dispatch(authActions.receiveSocket(socketID))
-    );
+    // socket.on('receive socket', socketID =>
+      // dispatch(authActions.receiveSocket(socketID))
+    // );
     socket.on('receive private channel', channel =>
       dispatch(actions.receiveRawChannel(channel))
     );
@@ -81,6 +82,7 @@ export default class Chat extends Component {
   }
   handleSendDirectMessage() {
     const { dispatch, socket, channels, user } = this.props;
+    user.username="test"
     const doesPrivateChannelExist = channels.filter(item => {
       return item.name === (`${this.state.targetedUser.username}+${user.username}` || `${user.username}+${this.state.targetedUser.username}`)
     })
@@ -103,7 +105,7 @@ export default class Chat extends Component {
   render() {
     const { messages, socket, channels, activeChannel, typers, dispatch, user, screenWidth} = this.props;
     const filteredMessages = messages.filter(message => message.channelID === activeChannel);
-    const username = this.props.user.username;
+    const username = "this.props.user.username"
     const dropDownMenu = (
       <div style={{'width': '21rem', 'top': '0', alignSelf: 'baseline', padding: '0', margin: '0', order: '1'}}>
         <DropdownButton key={1} style={{'width': '21rem'}} id="user-menu"  bsSize="large" bsStyle="primary" title={username}>
@@ -172,16 +174,16 @@ export default class Chat extends Component {
           {typers.length === 1 &&
             <div>
               <span>
-                <TypingListItem username={typers[0]} key={1}/>
+                <TypingListItem username="{typers[0]}" key={1}/>
                 <span> is typing</span>
               </span>
             </div>}
           {typers.length === 2 &&
           <div>
             <span>
-              <TypingListItem username={typers[0]} key={1}/>
+              <TypingListItem username="{typers[0]}" key={1}/>
               <span> and </span>
-              <TypingListItem username={typers[1]} key={2}/>
+              <TypingListItem username="{typers[1]}" key={2}/>
               <span> are typing</span>
             </span>
           </div>}
