@@ -1,7 +1,8 @@
 import * as types from '../constants/ActionTypes';
 // import { browserHistory } from 'react-router';
-import fetch from 'isomorphic-fetch';
+
 import moment from 'moment';
+var request = require('superagent');
 
 // NOTE:Chat actions
 
@@ -64,6 +65,15 @@ export function changeChannel(channel) {
 // }
 
 export function fetchChannels(user) {
+  request
+  .get("http://192.168.87.35:4000/api/get_initial_message.json")
+  .set("Allow-Control-Allow-Origin", "*")
+  .end(function(err, res){
+    console.log(res.text);//レスポンス
+    //レスポンスがJSONの場合 
+    console.log(res.body);//ここにparse済みのオブジェクトが入る
+  });
+
   return dispatch => {
     dispatch(requestChannels())
     return fetch(`/api/channels/${user}`)
@@ -95,9 +105,9 @@ function requestMessages() {
 export function fetchMessages(channel) {
   return dispatch => {
     dispatch(requestMessages())
-    return fetch(`/api/messages/${channel}`)
-      .then(response => response.json())
-      .then(json => dispatch(receiveMessages(json, channel)))
+    return fetch(`http://192.168.87.35:4000/api/get_initial_message.json`, {mode: 'no-cors'})
+      .then(response => console.log(response))
+      .then(json => console.log(json))
       .catch(error => {throw error});
   }
 }
